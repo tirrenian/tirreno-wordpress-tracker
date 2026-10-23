@@ -360,6 +360,7 @@ final class TirrenoTracker {
 		}
 
 		$this->tracker->setEventTypeAccountLogin();
+		$this->set_identity( $user );
 	}
 
 	public function set_event_type_account_logout(): void {
@@ -376,6 +377,45 @@ final class TirrenoTracker {
 		}
 
 		$this->tracker->setEventTypeAccountLoginFail();
+
+		// Nobody is logged in during a failed attempt, so the identity set at
+		// init is empty. Attribute the event to the account that was targeted.
+		$login = trim( $username );
+		if ( '' === $login ) {
+			return;
+		}
+
+		$user = get_user_by( 'login', $login );
+		if ( ! $user && is_email( $login ) ) {
+			$user = get_user_by( 'email', $login );
+		}
+
+		if ( $user instanceof WP_User ) {
+			$this->set_identity( $user );
+			return;
+		}
+
+		// Unknown username: keep it, since guessed names are a signal in themselves.
+		// If nothing usable survives sanitizing, the IP-based fallback applies.
+		$guessed = sanitize_user( $login );
+		if ( '' !== $guessed ) {
+			$this->tracker->setUserName( $guessed );
+		}
+	}
+
+	/**
+	 * Set username and email from a WP_User.
+	 *
+	 * Used by login events, which fire before the request's current user is set.
+	 */
+	private function set_identity( WP_User $user ): void {
+		if ( $user->user_login ) {
+			$this->tracker->setUserName( (string) $user->user_login );
+		}
+
+		if ( $user->user_email ) {
+			$this->tracker->setEmailAddress( (string) $user->user_email );
+		}
 	}
 
 	// keep 1 arg
