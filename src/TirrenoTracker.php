@@ -193,7 +193,7 @@ final class TirrenoTracker {
 				<th scope="row">Sensor URL</th>
 				<td>
 					<input type="text" class="regular-text" name="tirreno_url" value="<?php echo esc_attr( get_option( 'tirreno_url' ) ); ?>" />
-					<p class="description"><?php esc_html_e( 'Base address of your tirreno, for example https://tirreno.example.com. /sensor/ is added automatically.', 'tirreno' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Full sensor URL of your tirreno, including the trailing slash, for example https://tirreno.example.com/sensor/.', 'tirreno' ); ?></p>
 				</td>
 				</tr>
 				<tr valign="top">
