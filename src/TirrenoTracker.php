@@ -9,7 +9,7 @@
  * @link              https://www.tirreno.com tirreno(tm)
  *
  * @wordpress-plugin
- * Plugin Name:       tirreno security framework
+ * Plugin Name:       tirreno for WordPress
  * Plugin URI:        https://github.com/tirrenotechnologies/tirreno-wordpress-tracker/
  * Description:       Plugin implements the tirreno tracking API via TirrenoTracker library.
  * Version:           0.9.1
@@ -113,7 +113,7 @@ final class TirrenoTracker {
 
 	public function add_menu(): void {
 		add_menu_page(
-			'tirreno security framework',
+			'tirreno for WordPress',
 			'tirreno',
 			'manage_options',
 			'tirreno-wordpress-plugin',
