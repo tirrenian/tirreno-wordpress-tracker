@@ -1,10 +1,10 @@
 <?php
 
 /**
- * tirreno ~ open security analytics
+ * tirreno ~ security framework
  * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
  *
- * @copyright     Copyright (c) tirreno technologies sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
  * @license       https://opensource.org/licenses/bsd-3-clause BSD License
  * @link          https://www.tirreno.com tirreno(tm)
  */
