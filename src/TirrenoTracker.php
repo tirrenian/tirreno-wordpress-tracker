@@ -119,7 +119,7 @@ final class TirrenoTracker {
 			<?php settings_fields( 'tirreno-settings-group' ); ?>
 			<table class="form-table">
 				<tr valign="top">
-				<th scope="row">tirreno URL</th>
+				<th scope="row">Sensor URL</th>
 				<td><input type="text" class="regular-text" name="tirreno_url" value="<?php echo esc_attr( get_option( 'tirreno_url' ) ); ?>" /></td>
 				</tr>
 				<tr valign="top">
