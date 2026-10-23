@@ -72,11 +72,6 @@ final class TirrenoTracker {
 		}
 	}
 
-	/**
-	 * Documentation and project links, used on the Plugins screen and the settings page.
-	 *
-	 * @return array<string, string> label => URL
-	 */
 	private function get_links(): array {
 		return array(
 			__( 'tirreno.com', 'tirreno' )                    => 'https://www.tirreno.com',
@@ -96,9 +91,6 @@ final class TirrenoTracker {
 		);
 	}
 
-	/**
-	 * Add the links under the plugin description on the Plugins screen.
-	 */
 	public function add_row_links( array $links, string $file ): array {
 		if ( plugin_basename( dirname( __DIR__ ) . '/tirreno-wordpress-tracker.php' ) !== $file ) {
 			return $links;
@@ -161,7 +153,8 @@ final class TirrenoTracker {
 			foreach ( $this->get_links() as $label => $url ) {
 				$tirreno_links[] = $this->link_html( $label, $url );
 			}
-			echo implode( ' | ', $tirreno_links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in link_html().
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo implode( ' | ', $tirreno_links ); // escaped previously in link_html()
 			?>
 		</p>
 
@@ -455,8 +448,7 @@ final class TirrenoTracker {
 
 		$this->tracker->setEventTypeAccountLoginFail();
 
-		// Nobody is logged in during a failed attempt, so the identity set at
-		// init is empty. Attribute the event to the account that was targeted.
+		// Nobody is logged in during a failed attempt, so the identity set at init is empty. Attribute the event to the account that was targeted.
 		$login = trim( $username );
 		if ( '' === $login ) {
 			return;
@@ -472,19 +464,13 @@ final class TirrenoTracker {
 			return;
 		}
 
-		// Unknown username: keep it, since guessed names are a signal in themselves.
-		// If nothing usable survives sanitizing, the IP-based fallback applies.
+		// Unknown username: keep it, since guessed names are a signal in themselves, if nothing usable survives sanitizing, the IP-based fallback applies.
 		$guessed = sanitize_user( $login );
 		if ( '' !== $guessed ) {
 			$this->tracker->setUserName( $guessed );
 		}
 	}
 
-	/**
-	 * Set username and email from a WP_User.
-	 *
-	 * Used by login events, which fire before the request's current user is set.
-	 */
 	private function set_identity( WP_User $user ): void {
 		if ( $user->user_login ) {
 			$this->tracker->setUserName( (string) $user->user_login );
